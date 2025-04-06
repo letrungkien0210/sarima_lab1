@@ -1,0 +1,106 @@
+# Water Usage Forecasting with SARIMA Model
+
+This project analyzes and forecasts water usage data using a SARIMA (Seasonal AutoRegressive Integrated Moving Average) model for the period from January 1, 2025 to April 4, 2025.
+
+## Table of Contents
+1. [Project Overview](#project-overview)
+2. [File Structure](#file-structure)
+3. [Functions](#functions)
+4. [Execution Results](#execution-results)
+5. [Generated Visualizations](#generated-visualizations)
+
+## Project Overview
+The project implements a SARIMA model to analyze water consumption patterns from smart meter data and make predictions for future usage. The analysis includes data preprocessing, model training, diagnostics, and forecasting.
+
+## File Structure
+```
+├── data/
+│   └── meter_usages_1743839212343/    # Raw meter usage data files
+├── merge_csv.py                        # Script to merge and sort CSV files
+├── practive_SARIMA.py                  # Main SARIMA analysis script
+├── merged_and_sorted_meter_usages.csv  # Processed input data
+├── acf_pacf_plot.png                   # ACF and PACF analysis plot
+├── detailed_diagnostics_plot.png       # Model diagnostics visualization
+├── extended_forecast_plot.png          # 7-day forecast visualization
+└── model_analysis_report.txt           # Detailed model analysis results
+```
+
+## Functions
+
+### practive_SARIMA.py Main Functions:
+
+1. `load_and_preprocess_data(file_path)`
+   - Loads the CSV data
+   - Performs initial data preprocessing
+   - Converts data into time series format
+
+2. `analyze_time_series(data)`
+   - Calculates basic statistics
+   - Performs stationarity test (Augmented Dickey-Fuller)
+   - Generates ACF and PACF plots
+
+3. `train_sarima_model(data, order, seasonal_order)`
+   - Trains SARIMA model with specified parameters
+   - Returns fitted model results
+
+4. `analyze_model_diagnostics(results)`
+   - Performs detailed model diagnostics
+   - Generates residual analysis
+   - Conducts Ljung-Box test
+   - Creates diagnostic plots
+
+5. `make_forecast(results, data, steps=48*7)`
+   - Generates 7-day forecasts
+   - Creates visualization with confidence intervals
+   - Returns forecast values
+
+## Execution Results
+
+Key findings from executed.06042025.txt:
+
+1. **Data Overview**:
+   - Total observations: 2264
+   - Key columns: Household owner, Household Code, Meter Serial, Usage, Value, Last update
+
+2. **Time Series Statistics**:
+   - Mean usage: 0.035914
+   - Standard deviation: 0.020940
+   - Min/Max: 0.000800 / 0.188500
+
+3. **Model Selection**:
+   - Best Model: SARIMA(2, 0, 2)x(1, 1, 1, 24)
+   - AIC: -13470.443914
+   - Log Likelihood: 6742.222
+
+4. **Forecast**:
+   - Generated 7-day hourly forecasts (168 steps)
+   - Includes 95% confidence intervals
+
+## Generated Visualizations
+
+### 1. ACF and PACF Analysis
+![ACF and PACF Plot](acf_pacf_plot.png)
+
+This visualization shows:
+- Autocorrelation Function (ACF)
+- Partial Autocorrelation Function (PACF)
+- Helps identify seasonal patterns and correlation structures in the data
+
+### 2. Model Diagnostics
+![Model Diagnostics](detailed_diagnostics_plot.png)
+
+This plot includes:
+- Standardized residuals
+- Histogram plus estimated density
+- Normal Q-Q plot
+- Correlogram
+- Helps validate model assumptions and fit
+
+### 3. Forecast Visualization
+![Forecast Plot](extended_forecast_plot.png)
+
+This visualization shows:
+- Historical data (last 14 days)
+- 7-day hourly forecast
+- 95% confidence intervals
+- Demonstrates the model's predictive capabilities
