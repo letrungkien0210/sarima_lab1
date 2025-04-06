@@ -1,0 +1,136 @@
+root@DESKTOP-566J89U:~/workspace/data_analysis/SARIMA/lab1# python3 practive_SARIMA.py
+
+--- Available columns in DataFrame ---
+['Household owner', 'Household Code', 'Meter Serial', 'Meter position', 'Model', 'Type', 'Usage', 'Value', 'Last update', 'Status']
+
+--- Initial DataFrame Information ---
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 2264 entries, 0 to 2263
+Data columns (total 10 columns):
+ #   Column           Non-Null Count  Dtype
+---  ------           --------------  -----
+ 0   Household owner  2264 non-null   object
+ 1   Household Code   2264 non-null   int64
+ 2   Meter Serial     2264 non-null   int64
+ 3   Meter position   0 non-null      float64
+ 4   Model            2264 non-null   object
+ 5   Type             2264 non-null   object
+ 6   Usage            2264 non-null   float64
+ 7   Value            2264 non-null   float64
+ 8   Last update      2264 non-null   object
+ 9   Status           2052 non-null   object
+dtypes: float64(3), int64(2), object(5)
+memory usage: 177.0+ KB
+
+--- First 5 rows of data ---
+  Household owner  Household Code  Meter Serial  Meter position Model   Type  Usage    Value                Last update     Status
+0           PTCH      10987143914      41934187             NaN  VK-4  SMART  0.019  328.039  2025-01-01 00:00:00+07:00  ESTIMATED
+1           PTCH      10987143914      41934187             NaN  VK-4  SMART  0.019  328.058  2025-01-01 01:00:00+07:00  ESTIMATED
+2           PTCH      10987143914      41934187             NaN  VK-4  SMART  0.019  328.077  2025-01-01 02:00:00+07:00  ESTIMATED
+3           PTCH      10987143914      41934187             NaN  VK-4  SMART  0.019  328.096  2025-01-01 03:00:00+07:00  ESTIMATED
+4           PTCH      10987143914      41934187             NaN  VK-4  SMART  0.019  328.115  2025-01-01 04:00:00+07:00  ESTIMATED
+
+--- Time Series Statistics ---
+count    2264.000000
+mean        0.035914
+std         0.020940
+min         0.000800
+25%         0.021700
+50%         0.032100
+75%         0.048100
+max         0.188500
+Name: Usage, dtype: float64
+
+--- Augmented Dickey-Fuller Test ---
+ADF Statistic: -8.199599530581745
+p-value: 7.291066769507541e-13
+
+--- Training SARIMA(1, 0, 1)x(1, 1, 1, 24) ---
+/usr/local/lib/python3.8/dist-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency H will be used.
+  self._init_dates(dates, freq)
+/usr/local/lib/python3.8/dist-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency H will be used.
+  self._init_dates(dates, freq)
+
+--- Training SARIMA(2, 0, 1)x(1, 1, 1, 24) ---
+/usr/local/lib/python3.8/dist-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency H will be used.
+  self._init_dates(dates, freq)
+/usr/local/lib/python3.8/dist-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency H will be used.
+  self._init_dates(dates, freq)
+
+--- Training SARIMA(1, 0, 2)x(1, 1, 1, 24) ---
+/usr/local/lib/python3.8/dist-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency H will be used.
+  self._init_dates(dates, freq)
+/usr/local/lib/python3.8/dist-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency H will be used.
+  self._init_dates(dates, freq)
+
+--- Training SARIMA(2, 0, 2)x(1, 1, 1, 24) ---
+/usr/local/lib/python3.8/dist-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency H will be used.
+  self._init_dates(dates, freq)
+/usr/local/lib/python3.8/dist-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency H will be used.
+  self._init_dates(dates, freq)
+
+--- Best Model ---
+Parameters: SARIMA(2, 0, 2)x(1, 1, 1, 24)
+AIC: -13470.443914028732
+
+--- Detailed Model Diagnostics ---
+                                      SARIMAX Results
+============================================================================================
+Dep. Variable:                                Usage   No. Observations:                 2264
+Model:             SARIMAX(2, 0, 2)x(1, 1, [1], 24)   Log Likelihood                6742.222
+Date:                              Sun, 06 Apr 2025   AIC                         -13470.444
+Time:                                      14:23:27   BIC                         -13430.529
+Sample:                                  01-01-2025   HQIC                        -13455.863
+                                       - 04-05-2025
+Covariance Type:                                opg
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+ar.L1          1.6678      0.049     34.213      0.000       1.572       1.763
+ar.L2         -0.7256      0.045    -16.288      0.000      -0.813      -0.638
+ma.L1         -1.1000      0.049    -22.415      0.000      -1.196      -1.004
+ma.L2          0.3522      0.029     12.048      0.000       0.295       0.409
+ar.S.L24     1.94e-05   8.29e-06      2.340      0.019    3.15e-06    3.57e-05
+ma.S.L24      -1.0128      0.012    -87.747      0.000      -1.035      -0.990
+sigma2         0.0001   2.29e-06     53.889      0.000       0.000       0.000
+===================================================================================
+Ljung-Box (L1) (Q):                   2.78   Jarque-Bera (JB):             23808.13
+Prob(Q):                              0.10   Prob(JB):                         0.00
+Heteroskedasticity (H):               0.58   Skew:                             0.26
+Prob(H) (two-sided):                  0.00   Kurtosis:                        19.06
+===================================================================================
+
+Warnings:
+[1] Covariance matrix calculated using the outer product of gradients (complex-step).
+
+--- Residual Statistics ---
+count    2264.000000
+mean        0.000062
+std         0.011516
+min        -0.097401
+25%        -0.003045
+50%        -0.000404
+75%         0.002872
+max         0.095082
+dtype: float64
+
+--- Ljung-Box Test Results ---
+       lb_stat     lb_pvalue
+10  169.913354  2.891007e-31
+20  199.639938  1.325884e-31
+30  203.830698  9.485958e-28
+
+--- Extended Forecast (7 days) ---
+2025-04-05 08:00:00+07:00    0.036178
+2025-04-05 09:00:00+07:00    0.036497
+2025-04-05 10:00:00+07:00    0.037196
+2025-04-05 11:00:00+07:00    0.038156
+2025-04-05 12:00:00+07:00    0.039254
+                               ...
+2025-04-12 03:00:00+07:00    0.021698
+2025-04-12 04:00:00+07:00    0.021691
+2025-04-12 05:00:00+07:00    0.021657
+2025-04-12 06:00:00+07:00    0.022367
+2025-04-12 07:00:00+07:00    0.023069
+Freq: H, Name: Forecast, Length: 168, dtype: float64
+root@DESKTOP-566J89U:~/workspace/data_analysis/SARIMA/lab1#
