@@ -104,3 +104,17 @@ This visualization shows:
 - 7-day hourly forecast
 - 95% confidence intervals
 - Demonstrates the model's predictive capabilities
+## Installation
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+(.venv) kienle@KienLePC:~/workspace/lab/sarima_lab1$ pip install pandas numpy matplotlib seaborn statsmodels scikit-learn
+deactivate
+```
+
+## Run
+
+```bash
+source .venv/bin/activate && python practive_SARIMA.py
+```
