@@ -104,6 +104,17 @@ This visualization shows:
 - 7-day hourly forecast
 - 95% confidence intervals
 - Demonstrates the model's predictive capabilities
+
+### 4. Box Plot Analysis
+![Usage Box Plot](usage_boxplot.png)
+
+This visualization shows:
+- Distribution of water usage across different time periods
+- Identifies outliers and extreme values
+- Shows the median, quartiles, and range of water consumption
+- Helps understand the variability and patterns in water usage data
+- Useful for detecting unusual consumption patterns or potential meter issues
+
 ## Installation
 
 ```bash

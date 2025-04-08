@@ -75,6 +75,21 @@ def analyze_time_series(data):
     print(f'ADF Statistic: {adf_result[0]}')
     print(f'p-value: {adf_result[1]}')
     
+    # *** BỔ SUNG CODE VẼ BOX PLOT VÀO ĐÂY ***
+    print("\n--- Generating Box Plot for Usage Data ---")
+    plt.figure(figsize=(8, 6)) # Tạo một khung hình mới cho biểu đồ
+    sns.boxplot(y=data)       # Sử dụng seaborn để vẽ box plot cho dữ liệu 'Usage'
+    plt.title('Biểu đồ Box Plot của Mức tiêu thụ nước hàng giờ') # Đặt tiêu đề
+    plt.ylabel('Mức tiêu thụ (Usage)') # Đặt nhãn trục Y
+    plt.grid(True, axis='y', linestyle='--', alpha=0.7) # Thêm lưới ngang cho dễ nhìn
+    try:
+        plt.savefig('usage_boxplot.png') # Lưu biểu đồ thành file ảnh
+        print("--- Box Plot đã được lưu vào file: usage_boxplot.png ---")
+    except Exception as e:
+        print(f"Lỗi khi lưu Box Plot: {e}")
+    plt.close() # Đóng hình vẽ để tránh hiển thị nếu chạy script tự động
+    # *** KẾT THÚC PHẦN BỔ SUNG ***
+    
     # Plot ACF and PACF
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(15, 10))
     sm.graphics.tsa.plot_acf(data, lags=48, ax=ax1)
