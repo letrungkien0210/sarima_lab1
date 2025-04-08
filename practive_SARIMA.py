@@ -21,6 +21,12 @@ import statsmodels.api as sm
 from statsmodels.tsa.stattools import acf
 from scipy import stats
 import seaborn as sns
+import time
+from datetime import timedelta
+
+def format_time(seconds):
+    """Convert seconds to a human-readable format"""
+    return str(timedelta(seconds=round(seconds)))
 
 # --- 1. Data Loading and Preprocessing ---
 def load_and_preprocess_data(file_path):
@@ -33,6 +39,7 @@ def load_and_preprocess_data(file_path):
     Returns:
         pd.Series: Preprocessed time series data
     """
+    start_time = time.time()
     try:
         df = pd.read_csv(file_path)
         print("\n--- Available columns in DataFrame ---")
@@ -51,6 +58,9 @@ def load_and_preprocess_data(file_path):
         df_ts.set_index('timestamp', inplace=True)
         df_ts.sort_index(inplace=True)
         
+        execution_time = time.time() - start_time
+        print(f"\nData loading and preprocessing completed in: {format_time(execution_time)}")
+        
         return df_ts['Usage']
         
     except FileNotFoundError:
@@ -64,6 +74,8 @@ def analyze_time_series(data):
     Args:
         data (pd.Series): Time series data
     """
+    start_time = time.time()
+    
     # Basic statistics
     print("\n--- Time Series Statistics ---")
     print(data.describe())
@@ -99,6 +111,9 @@ def analyze_time_series(data):
     plt.tight_layout()
     plt.savefig('acf_pacf_plot.png')
     plt.close()
+    
+    execution_time = time.time() - start_time
+    print(f"\nTime series analysis completed in: {format_time(execution_time)}")
 
 def train_sarima_model(data, order, seasonal_order):
     """
@@ -112,6 +127,8 @@ def train_sarima_model(data, order, seasonal_order):
     Returns:
         SARIMAXResults: Fitted model
     """
+    start_time = time.time()
+    
     model = sm.tsa.SARIMAX(data,
                           order=order,
                           seasonal_order=seasonal_order,
@@ -119,6 +136,10 @@ def train_sarima_model(data, order, seasonal_order):
                           enforce_invertibility=False)
     
     results = model.fit(disp=False)
+    
+    execution_time = time.time() - start_time
+    print(f"Model training completed in: {format_time(execution_time)}")
+    
     return results
 
 def analyze_model_diagnostics(results):
@@ -128,6 +149,8 @@ def analyze_model_diagnostics(results):
     Args:
         results (SARIMAXResults): Fitted SARIMA model
     """
+    start_time = time.time()
+    
     # Model summary
     print("\n--- Detailed Model Diagnostics ---")
     print(results.summary())
@@ -147,6 +170,9 @@ def analyze_model_diagnostics(results):
     plt.tight_layout()
     plt.savefig('detailed_diagnostics_plot.png')
     plt.close()
+    
+    execution_time = time.time() - start_time
+    print(f"\nModel diagnostics completed in: {format_time(execution_time)}")
 
 def make_forecast(results, data, steps=48*7):  # Extended to 7 days
     """
@@ -160,6 +186,8 @@ def make_forecast(results, data, steps=48*7):  # Extended to 7 days
     Returns:
         pd.Series: Forecast values
     """
+    start_time = time.time()
+    
     # Generate forecast
     forecast_object = results.get_forecast(steps=steps)
     forecast_values = forecast_object.predicted_mean
@@ -207,10 +235,15 @@ def make_forecast(results, data, steps=48*7):  # Extended to 7 days
     plt.savefig('extended_forecast_plot.png')
     plt.close()
     
+    execution_time = time.time() - start_time
+    print(f"\nForecast generation completed in: {format_time(execution_time)}")
+    
     return forecast_series
 
 # --- Main Execution ---
 if __name__ == "__main__":
+    total_start_time = time.time()
+    
     # Load and preprocess data
     file_path = 'merged_and_sorted_meter_usages.csv'
     data = load_and_preprocess_data(file_path)
@@ -258,9 +291,12 @@ if __name__ == "__main__":
     with open('model_analysis_report.txt', 'w') as f:
         f.write("SARIMA Model Analysis Report\n")
         f.write("=========================\n\n")
+        f.write(f"Total execution time: {format_time(time.time() - total_start_time)}\n\n")
         f.write(str(results.summary()))
         f.write("\n\nModel Comparison:\n")
         for params, metrics in results_dict.items():
             f.write(f"\nSARIMA{params[0]}x{params[1]}:\n")
             f.write(f"AIC: {metrics['aic']}\n")
             f.write(f"BIC: {metrics['bic']}\n")
+    
+    print(f"\nTotal execution time: {format_time(time.time() - total_start_time)}")

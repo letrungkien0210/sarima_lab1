@@ -1,12 +1,14 @@
 SARIMA Model Analysis Report
 =========================
 
+Total execution time: 0:01:08
+
                                       SARIMAX Results                                       
 ============================================================================================
 Dep. Variable:                                Usage   No. Observations:                 2264
 Model:             SARIMAX(2, 0, 2)x(1, 1, [1], 24)   Log Likelihood                6741.973
 Date:                              Tue, 08 Apr 2025   AIC                         -13469.946
-Time:                                      19:27:18   BIC                         -13430.032
+Time:                                      19:51:22   BIC                         -13430.032
 Sample:                                  01-01-2025   HQIC                        -13455.365
                                        - 04-05-2025                                         
 Covariance Type:                                opg                                         
