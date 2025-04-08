@@ -115,6 +115,48 @@ This visualization shows:
 - Helps understand the variability and patterns in water usage data
 - Useful for detecting unusual consumption patterns or potential meter issues
 
+# Phân tích Biểu đồ Box Plot - Mức tiêu thụ nước hàng giờ
+
+## Phân tích chi tiết:
+
+### 1. Xu hướng trung tâm (Median - Trung vị)
+
+* **Đường kẻ ngang đậm bên trong hộp** là giá trị Trung vị (Median hay Q2). Nhìn vào trục Y, đường này nằm ở khoảng **0.032**.
+* *Ý nghĩa:* Một nửa (50%) số giờ trong 4 tháng có mức tiêu thụ nước thấp hơn hoặc bằng **0.032**, và nửa còn lại cao hơn hoặc bằng **0.032**. Đây là mức tiêu thụ "điển hình" nhất.
+
+### 2. Độ trải rộng (Spread/Dispersion)
+
+* **Hộp (Box):** Kéo dài từ Q1 (cạnh dưới) đến Q3 (cạnh trên).
+    * Cạnh dưới (Q1) nằm ở khoảng **0.022**.
+    * Cạnh trên (Q3) nằm ở khoảng **0.048**.
+    * => **Khoảng tứ phân vị (IQR)** = Q3 - Q1 ≈ 0.048 - 0.022 = **0.026**.
+* *Ý nghĩa (Hộp):* 50% số giờ tiêu thụ "ở giữa" (không tính 25% thấp nhất và 25% cao nhất) có mức dùng nước nằm trong khoảng từ **0.022 đến 0.048**. Độ dài của hộp (0.026) cho thấy một sự biến động nhất định trong nhóm giờ tiêu thụ phổ biến này.
+
+* **Râu (Whiskers):**
+    * Râu dưới kéo dài từ Q1 (≈0.022) xuống đến gần **0.000** (hợp lý vì mức tiêu thụ không thể âm).
+    * Râu trên kéo dài từ Q3 (≈0.048) lên đến khoảng **0.085**.
+* *Ý nghĩa (Râu):* Phần lớn các giá trị "thông thường" (không kể ngoại lai) nằm trong khoảng từ gần **0 đến 0.085**. Độ dài của râu trên lớn hơn râu dưới đáng kể.
+
+### 3. Tính đối xứng / Độ lệch (Symmetry/Skewness)
+
+* **Vị trí Trung vị trong hộp:** Đường trung vị (≈0.032) nằm **gần với Q1 (≈0.022) hơn** là Q3 (≈0.048). Phần trên của hộp (Median đến Q3) dài hơn phần dưới (Q1 đến Median).
+* **Độ dài Râu:** Râu trên (từ Q3 đến ≈0.085) **dài hơn hẳn** râu dưới (từ Q1 đến ≈0).
+* *Ý nghĩa:* Cả hai yếu tố này đều cho thấy rõ ràng rằng dữ liệu bị **lệch phải (positively skewed)**. Điều này có nghĩa là: đa số các giờ có mức tiêu thụ nước tập trung ở mức thấp và trung bình (dưới 0.048), nhưng có một số ít giờ tiêu thụ nước cao hơn hẳn và kéo dài sự phân bố về phía bên phải (phía giá trị cao). Điều này khớp với việc giá trị `mean` (≈0.036) lớn hơn `median` (≈0.032) mà chúng ta thấy trong thống kê.
+
+### 4. Giá trị ngoại lai (Outliers)
+
+* Có **nhiều điểm tròn nhỏ** được vẽ phía trên râu trên. Các điểm này nằm trong khoảng từ **0.09 đến gần 0.19**.
+* *Ý nghĩa:* Đây là những giờ có mức tiêu thụ nước **cao bất thường** so với đại đa số các giờ khác trong 4 tháng (cao hơn ngưỡng `Q3 + 1.5 * IQR` ≈ 0.087). Chúng đại diện cho những thời điểm tiêu thụ nước rất cao của hộ gia đình (có thể là tưới cây, giặt giũ nhiều, rửa xe, hoặc các hoạt động dùng nhiều nước khác). Sự tồn tại của nhiều outliers này càng củng cố kết luận về tính lệch phải của dữ liệu.
+
+## Kết luận chung từ Box Plot:
+
+Biểu đồ Box Plot này cung cấp một cái nhìn tổng quan rất tốt về dữ liệu tiêu thụ nước:
+
+* Mức tiêu thụ **điển hình (trung vị)** là khoảng **0.032** đơn vị/giờ.
+* Mức tiêu thụ **phổ biến nhất (50% ở giữa)** nằm trong khoảng **0.022 đến 0.048** đơn vị/giờ.
+* Dữ liệu **không đối xứng**, mà bị **lệch hẳn về phía giá trị cao (lệch phải)**. Đa số thời gian dùng ít hoặc vừa phải, nhưng có những lúc dùng nhiều hơn đáng kể.
+* Có **nhiều giờ tiêu thụ cao bất thường (outliers)**, lên đến gần **0.19** đơn vị/giờ, cần được lưu ý.
+
 ## Installation
 
 ```bash
